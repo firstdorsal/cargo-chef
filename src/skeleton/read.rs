@@ -59,7 +59,7 @@ pub(super) fn manifests<P: AsRef<Path>>(
         // However, if this root manifest doesn't contain [package], it is not considered a package
         // by cargo metadata. Therefore, we have to add it manually.
         // Workspaces currently cannot be nested, so this should only happen at the root.
-        packages.insert(base_path.as_ref().join("Cargo.toml"), Default::default());
+        //packages.insert(base_path.as_ref().join("Cargo.toml"), Default::default());
     }
 
     let mut manifests = vec![];
