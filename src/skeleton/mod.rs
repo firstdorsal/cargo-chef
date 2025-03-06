@@ -262,9 +262,9 @@ fn panic(_: &core::panic::PanicInfo) -> ! {
                         for file in walker {
                             let file = file?;
                             if file.file_type().is_file() {
-                                fs::remove_file(file.path())?;
+                                fs::remove_file(file.path());
                             } else if file.file_type().is_dir() {
-                                fs::remove_dir_all(file.path())?;
+                                fs::remove_dir_all(file.path());
                             }
                         }
                     }
