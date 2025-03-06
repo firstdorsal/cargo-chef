@@ -63,14 +63,18 @@ impl Recipe {
             return Ok(());
         }
         build_dependencies(&args);
-        self.skeleton
+        let _ = self
+            .skeleton
             .remove_compiled_dummies(
                 current_directory,
                 args.profile,
                 args.target,
                 args.target_dir,
             )
-            .context("Failed to clean up dummy compilation artifacts.")?;
+            .context("Failed to clean up dummy compilation artifacts.")
+            .map_err(|e| {
+                println!("Failed to clean up dummy compilation artifacts: {:?}", e);
+            });
         Ok(())
     }
 }
