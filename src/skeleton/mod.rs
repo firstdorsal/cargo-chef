@@ -217,18 +217,14 @@ fn panic(_: &core::panic::PanicInfo) -> ! {
             None => {
                 let target_dir = base_path.as_ref().join("target");
                 if target_dir.exists() {
-                    info!("Using target directory: {:?}", target_dir);
                     target_dir
                 } else {
-                    info!(
-                        "Using target directory: {:?}",
-                        base_path.as_ref().parent().unwrap().join("target")
-                    );
                     base_path.as_ref().parent().unwrap().join("target")
                 }
             }
             Some(target_dir) => target_dir,
         };
+        dbg!(&target_dir);
 
         // https://doc.rust-lang.org/cargo/guide/build-cache.html
         // > For historical reasons, the `dev` and `test` profiles are stored
@@ -255,10 +251,7 @@ fn panic(_: &core::panic::PanicInfo) -> ! {
             .map(|path| path.join(profile_dir))
             .collect();
 
-        info!(
-            "Removing dummy compilation artifacts from {:?}",
-            target_directories
-        );
+        dbg!(&target_directories);
 
         for manifest in &self.manifests {
             let parsed_manifest =
