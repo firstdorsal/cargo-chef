@@ -9,6 +9,7 @@ use cargo_manifest::Product;
 use cargo_metadata::Metadata;
 use fs_err as fs;
 use globwalk::GlobWalkerBuilder;
+use log::{debug, info};
 use pathdiff::diff_paths;
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
@@ -216,8 +217,13 @@ fn panic(_: &core::panic::PanicInfo) -> ! {
             None => {
                 let target_dir = base_path.as_ref().join("target");
                 if target_dir.exists() {
+                    info!("Using target directory: {:?}", target_dir);
                     target_dir
                 } else {
+                    info!(
+                        "Using target directory: {:?}",
+                        base_path.as_ref().parent().unwrap().join("target")
+                    );
                     base_path.as_ref().parent().unwrap().join("target")
                 }
             }
@@ -248,6 +254,11 @@ fn panic(_: &core::panic::PanicInfo) -> ! {
             .iter()
             .map(|path| path.join(profile_dir))
             .collect();
+
+        info!(
+            "Removing dummy compilation artifacts from {:?}",
+            target_directories
+        );
 
         for manifest in &self.manifests {
             let parsed_manifest =
