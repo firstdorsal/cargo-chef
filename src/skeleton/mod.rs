@@ -213,7 +213,14 @@ fn panic(_: &core::panic::PanicInfo) -> ! {
         target_dir: Option<PathBuf>,
     ) -> Result<(), anyhow::Error> {
         let target_dir = match target_dir {
-            None => base_path.as_ref().join("target"),
+            None => {
+                let target_dir = base_path.as_ref().join("target");
+                if target_dir.exists() {
+                    target_dir
+                } else {
+                    base_path.as_ref().parent().unwrap().join("target")
+                }
+            }
             Some(target_dir) => target_dir,
         };
 
