@@ -248,7 +248,6 @@ fn panic(_: &core::panic::PanicInfo) -> ! {
                     .collect()
             })
             .iter()
-            .map(|path| path.join(profile_dir))
             .collect();
 
         dbg!(&target_directories);
