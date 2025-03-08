@@ -240,15 +240,12 @@ fn panic(_: &core::panic::PanicInfo) -> ! {
             OptimisationProfile::Other(custom_profile) => custom_profile,
         };
 
-        let target_directories: Vec<PathBuf> = target
-            .map_or(vec![target_dir.clone()], |targets| {
-                targets
-                    .iter()
-                    .map(|target| target_dir.join(target_str(target)))
-                    .collect()
-            })
-            .iter()
-            .collect();
+        let target_directories: Vec<PathBuf> = target.map_or(vec![target_dir.clone()], |targets| {
+            targets
+                .iter()
+                .map(|target| target_dir.join(target_str(target)))
+                .collect()
+        });
 
         dbg!(&target_directories);
 
