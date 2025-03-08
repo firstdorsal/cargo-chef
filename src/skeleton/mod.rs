@@ -272,6 +272,7 @@ fn panic(_: &core::panic::PanicInfo) -> ! {
                         .build()?;
                         for file in walker {
                             let file = file?;
+                            dbg!(file.path());
                             if file.file_type().is_file() {
                                 fs::remove_file(file.path())?;
                             } else if file.file_type().is_dir() {
