@@ -253,9 +253,16 @@ fn panic(_: &core::panic::PanicInfo) -> ! {
 
         dbg!(&target_directories);
 
+        dbg!(&self.manifests);
+
         for manifest in &self.manifests {
             let parsed_manifest =
                 cargo_manifest::Manifest::from_slice(manifest.contents.as_bytes())?;
+
+            dbg!(manifest);
+
+            dbg!(&parsed_manifest);
+
             if let Some(package) = parsed_manifest.package.as_ref() {
                 for target_directory in &target_directories {
                     // Remove dummy libraries.
