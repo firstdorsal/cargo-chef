@@ -259,10 +259,6 @@ fn panic(_: &core::panic::PanicInfo) -> ! {
             let parsed_manifest =
                 cargo_manifest::Manifest::from_slice(manifest.contents.as_bytes())?;
 
-            dbg!(manifest);
-
-            dbg!(&parsed_manifest);
-
             if let Some(package) = parsed_manifest.package.as_ref() {
                 for target_directory in &target_directories {
                     // Remove dummy libraries.
@@ -277,6 +273,9 @@ fn panic(_: &core::panic::PanicInfo) -> ! {
                             ],
                         )
                         .build()?;
+
+                        dbg!(library_name);
+
                         for file in walker {
                             let file = file?;
                             dbg!(file.path());
